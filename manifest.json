@@ -1,0 +1,54 @@
+{
+  "manifest_version": 3,
+  "name": "Discord Web Auto Quest Extension",
+  "version": "1.10.4",
+  "description": "Automatically complete Discord quests in the browser without any manual work",
+  "icons": {
+    "16": "assets/icon.png",
+    "48": "assets/icon.png",
+    "128": "assets/icon.png"
+  },
+  "permissions": [
+    "declarativeNetRequestWithHostAccess",
+    "scripting",
+    "activeTab",
+    "storage",
+    "notifications"
+  ],
+  "host_permissions": [
+    "https://*.discord.com/*"
+  ],
+  "background": {
+    "service_worker": "dist/background.js"
+  },
+  "action": {
+    "default_popup": "dist/popup.html",
+    "default_icon": {
+      "16": "assets/icon.png",
+      "48": "assets/icon.png",
+      "128": "assets/icon.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://discord.com/*", "https://canary.discord.com/*"],
+      "js": ["dist/quest-home.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://discord.com/*", "https://canary.discord.com/*"],
+      "js": ["dist/user-agent-override.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "dist/rules.json"
+      }
+    ]
+  }
+}
