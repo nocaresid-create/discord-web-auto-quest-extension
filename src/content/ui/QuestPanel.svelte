@@ -59,7 +59,7 @@
   <div class="footer">
     <span class="credit">
       v{questStore.panelVersion} · by
-      <a href="https://github.com/nvckai/Discord-Web-Auto-Quest-Extension" target="_blank" rel="noopener">NAN</a>
+      <a href="https://github.com/nocaresid-create/discord-web-auto-quest-extension" target="_blank" rel="noopener">NAN</a>
     </span>
     <span class="session">{sessionLabel}</span>
     <div class="actions">
