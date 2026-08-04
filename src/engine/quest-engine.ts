@@ -183,10 +183,14 @@ async function enrollQuest(api: any, id: string): Promise<{ ok: boolean; rateLim
       };
       console.warn(`Discord Auto Quest: enroll attempt "${attempt.label}" failed (${lastFail.detail})`);
     } catch (error) {
-      const detail = error && error.message ? String(error.message) : String(error);
-      console.warn(`Discord Auto Quest: enroll attempt "${attempt.label}" error: ${detail}`);
-      lastFail = { ok: false, rateLimited: false, detail };
-    }
+  const detail =
+    error instanceof Error
+      ? error.message
+      : String(error);
+
+  console.warn(`Discord Auto Quest: enroll attempt "${attempt.label}" error: ${detail}`);
+  lastFail = { ok: false, rateLimited: false, detail };
+}
   }
   return lastFail;
 }
@@ -282,7 +286,7 @@ function gameApplicationId(state: QuestState): string | null {
   try {
     const tasks = state.quest.config?.taskConfigV2?.tasks ?? state.quest.config?.taskConfig?.tasks;
     const task = tasks?.[state.taskType];
-    const apps = task?.applications;
+    const apps = (task as any)?.applications;
     const id = apps && apps.length > 0 ? apps[0].id : null;
     return id || null;
   } catch (error) {
